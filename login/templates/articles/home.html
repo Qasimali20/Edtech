@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #dfeff8; /* Light blue background */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            color: #004d99; /* Darker blue for headings */
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        p {
+            color: #555;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .button-group {
+            margin-top: 20px;
+        }
+        a, button {
+            background-color: #00aaff; /* Bright blue button */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+            display: inline-block;
+        }
+        a:hover, button:hover {
+            background-color: #0088cc; /* Darker blue on hover */
+        }
+        a:focus, button:focus {
+            outline: 2px solid #004d99; /* Darker blue outline for focused state */
+            outline-offset: 2px;
+        }
+        form {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to EdTech!</h2>
+        {% if user.is_authenticated %}
+            <p>Hi {{ user.username }}! We're glad to see you here.</p>
+            <div class="button-group">
+                <a href="{% url 'protected' %}">Protected Page</a>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+        {% else %}
+            <p>Hi! We're glad to see you here. This is the home page where you can log in or sign up to get started.</p>
+            <div class="button-group">
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Sign Up</a>
+            </div>
+        {% endif %}
+        <p>Have a great day!</p>
+    </div>
+</body>
+</html>
