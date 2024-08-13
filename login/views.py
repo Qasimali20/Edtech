@@ -10,7 +10,7 @@ from django.contrib import messages
 # Create your views here.
 
 def home_view(request):
-    return render(request, 'articles/home.html')
+    return render(request, 'login/home.html')
 
 def register_view(request):
     if request.method == "POST":
@@ -25,7 +25,7 @@ def register_view(request):
     else:
         form = registerForm()
 
-    return render(request, 'articles/register.html', {'form': form})
+    return render(request, 'login/register.html', {'form': form})
 def login_view(request):
     if request.method == "POST":
         username = request.POST.get('username')
@@ -37,9 +37,9 @@ def login_view(request):
             return redirect('protected')  # Redirect to protected page after login
         else:
             messages.error(request, 'Invalid username or password.')
-            return render(request, 'articles/login.html')
+            return render(request, 'login/login.html')
 
-    return render(request, 'articles/login.html')
+    return render(request, 'login/login.html')
 
 def logout_view(request):
     if request.method == "POST":
@@ -52,7 +52,7 @@ def logout_view(request):
         else:
             # Set a flag in the session to indicate the confirmation step
             request.session['logout_confirmed'] = True
-            return render(request, 'articles/logout.html')
+            return render(request, 'login/logout.html')
     
     # Handle other methods if needed (e.g., GET)
     # For simplicity, assuming that only POST requests are used
@@ -62,7 +62,7 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    return render(request, 'articles/profile.html')
+    return render(request, 'login/profile.html')
 
 # Protected view
 class ProtectedView(LoginRequiredMixin, View):
@@ -70,4 +70,4 @@ class ProtectedView(LoginRequiredMixin, View):
     redirect_field_name = 'next'
 
     def get(self, request):
-        return render(request, 'articles/protected.html')
+        return render(request, 'login/protected.html')
