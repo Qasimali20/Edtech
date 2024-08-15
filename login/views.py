@@ -15,7 +15,7 @@ from .forms import registerForm
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.conf import settings
-
+from django.http import JsonResponse
 # Create your views here.
 
 def home_view(request):
@@ -44,12 +44,12 @@ def login_view(request):
 
         if user is not None:
             auth_login(request, user)
-            return redirect('protected')  # Redirect to protected page after login
+            return JsonResponse({'message': 'Login successful!'})
         else:
-            messages.error(request, 'Invalid username or password.')
-            return render(request, 'login/login.html')
+            return JsonResponse({'message': 'Invalid username or password.'}, status=400)
 
     return render(request, 'login/login.html')
+
 
 def logout_view(request):
     if request.method == "POST":
@@ -105,7 +105,7 @@ class RequestPasswordResetView(View):
             )
 
             messages.success(request, 'Password reset link sent to your email.')
-            return redirect('login')
+            return render(request, 'login/request_reset.html')
         else:
             messages.error(request, 'Username not found.')
             return render(request, 'login/request_reset.html')
@@ -148,8 +148,8 @@ class PasswordResetConfirmView(View):
                 if form.is_valid():
                     form.save()
                     update_session_auth_hash(request, user)  # Keep the user logged in after password change
-                    messages.success(request, 'Your password has been reset successfully.')
-                    return redirect('login')
+                    # messages.success(request, 'Your password has been reset successfully.')
+                    return render(request, 'login/reset_confirm.html', {'form': form, 'password_reset_done': True})
                 else:
                     return render(request, 'login/reset_confirm.html', {'form': form})
             else:
@@ -157,3 +157,4 @@ class PasswordResetConfirmView(View):
                 return redirect('home')
         else:
             return redirect('home')
+

@@ -22,7 +22,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit:cover; 
+            object-fit: cover; 
             z-index: -1; 
         }
 
@@ -46,7 +46,7 @@
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight:normal;
+            font-weight: normal;
             color: #f0f2f5; 
         }
         input[type="text"], input[type="password"] {
@@ -96,23 +96,24 @@
             font-size: 16px;
         }
         .message.success {
-            color: #f0f2f5;
+            color: #4CAF50; /* Green */
         }
         .message.error {
-            color: #f0f2f5;
+            color: #F44336; /* Red */
         }
     </style>
 </head>
 <body>
     <video class="video-background" autoplay muted loop>
-        <source src="./assets/with LEARNING.mp4" type="video/mp4">
+        <source src="{% static 'assets/withLEARNING.mp4' %}" type="video/mp4">       
         Your browser does not support the video tag.
     </video>
     
     <div class="container">
         <h2>Login</h2>
-            <div class="messages" class="message"></div>
-        <form method="POST" action="{% url 'login' %}">
+        <div class="messages"></div>
+        <form id="loginForm" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Password</label>
@@ -125,9 +126,10 @@
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const messagesDiv = document.getElementById('messages');
-            messagesDiv.innerHTML = '';
+            event.preventDefault(); // Prevent the default form submission
+
+            const messagesDiv = document.querySelector('.messages');
+            messagesDiv.innerHTML = ''; // Clear previous messages
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -141,29 +143,29 @@
                 const response = await fetch('{% url "login" %}', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken') 
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': getCookie('csrftoken')
                     },
-                    body: JSON.stringify({ username, password })
+                    body: new URLSearchParams({
+                        'username': username,
+                        'password': password
+                    })
                 });
 
-                const result = await response.json();
-
                 if (response.ok) {
-                    showMessage('Login successful!', 'success');
-                    window.location.href = '{% url "protected" %}'; 
+                    // showMessage('Login successful!', 'success');
+                    window.location.href = '{% url "protected" %}'; // Redirect to protected page
                 } else {
+                    const result = await response.json();
                     showMessage(result.message || 'Login failed. Please try again.', 'error');
                 }
             } catch (error) {
                 showMessage('An error occurred. Please try again later.', 'error');
             }
-
-            document.getElementById('loginForm').reset();
         });
 
         function showMessage(message, type) {
-            const messagesDiv = document.getElementById('messages');
+            const messagesDiv = document.querySelector('.messages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}`;
             messageDiv.textContent = message;

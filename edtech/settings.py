@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'edtech.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'edtech',  # Name of the database you created
-        'USER': 'admin',  # Database user
-        'PASSWORD': 'edtech',  # User's password
-        'HOST': 'localhost',  # Typically 'localhost'
-        'PORT': '5433',  # Default port for PostgreSQL
+        'NAME': 'postgres',  # Name of the database you created
+        'USER': 'postgres.sskkziftbrxnlmlkjbph',  # Database user
+        'PASSWORD': 'Admin@test789',  # User's password
+        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',  # Typically 'localhost'
+        'PORT': '6543',  # Default port for PostgreSQL
     }
 } 
 
