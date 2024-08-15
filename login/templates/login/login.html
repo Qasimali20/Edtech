@@ -8,17 +8,26 @@
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}"> -->
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #dfeff8; /* Light blue background */
-            color: #333;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit:cover; 
+            z-index: -1; 
+        }
+
         .container {
-            background-color: #ffffff;
+            background-color: #e3f19125;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px;
@@ -27,7 +36,7 @@
             text-align: center;
         }
         h2 {
-            color: #004d99; /* Darker blue for headings */
+            color: #f0f2f5; 
             margin-bottom: 20px;
             font-size: 24px;
         }
@@ -37,11 +46,11 @@
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: #004d99; /* Darker blue label color */
+            font-weight:normal;
+            color: #f0f2f5; 
         }
-        input[type="text"], input[type="password"], input[type="email"] {
-            width: 100%;
+        input[type="text"], input[type="password"] {
+            width: 95%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ddd;
@@ -49,25 +58,29 @@
             font-size: 16px;
         }
         button {
-            background-color: #00aaff; /* Bright blue button */
-            color: #fff;
+            background-color: #333; 
+            color: #f0f2f5;
             border: none;
-            padding: 12px 20px;
+            width: 80%;
+            margin-left: 38px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 12px;
+            padding-bottom: 12px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
-            width: 100%;
         }
         button:hover {
-            background-color: #0088cc; /* Darker blue on hover */
+            background-color: #5f5b5b; 
         }
         .login-link {
             margin-top: 20px;
             font-size: 16px;
         }
         .login-link a {
-            color: #004d99; /* Darker blue link color */
+            color: #f0f2f5; 
             text-decoration: none;
         }
         .login-link a:hover {
@@ -83,27 +96,23 @@
             font-size: 16px;
         }
         .message.success {
-            background-color: #d4edda;
-            color: #155724;
+            color: #f0f2f5;
         }
         .message.error {
-            background-color: #f8d7da;
-            color: #721c24;
+            color: #f0f2f5;
         }
     </style>
 </head>
 <body>
+    <video class="video-background" autoplay muted loop>
+        <source src="./assets/with LEARNING.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
     <div class="container">
         <h2>Login</h2>
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <div class="message {{ message.tags }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
+            <div class="messages" class="message"></div>
         <form method="POST" action="{% url 'login' %}">
-            {% csrf_token %}
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Password</label>
@@ -113,5 +122,68 @@
         <p class="login-link">Don't have an account? <a href="{% url 'register' %}">Register here</a></p> 
         <p class="login-link">Forgot your password? <a href="{% url 'password_reset' %}">Reset</a></p>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = '';
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === '' || password === '') {
+                showMessage('Please fill in all fields.', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('{% url "login" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken') 
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('Login successful!', 'success');
+                    window.location.href = '{% url "protected" %}'; 
+                } else {
+                    showMessage(result.message || 'Login failed. Please try again.', 'error');
+                }
+            } catch (error) {
+                showMessage('An error occurred. Please try again later.', 'error');
+            }
+
+            document.getElementById('loginForm').reset();
+        });
+
+        function showMessage(message, type) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 </body>
 </html>
