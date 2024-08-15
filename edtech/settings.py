@@ -78,12 +78,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'edtech',  # Name of the database you created
-        'USER': 'qasim',  # Database user
-        'PASSWORD': '2004',  # User's password
+        'USER': 'admin',  # Database user
+        'PASSWORD': 'edtech',  # User's password
         'HOST': 'localhost',  # Typically 'localhost'
         'PORT': '5433',  # Default port for PostgreSQL
     }
-}
+} 
 
 
 # Password validation
