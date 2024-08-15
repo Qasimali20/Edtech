@@ -74,16 +74,24 @@ WSGI_APPLICATION = 'edtech.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# settings.py
+
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  # Name of the database you created
-        'USER': 'postgres.sskkziftbrxnlmlkjbph',  # Database user
-        'PASSWORD': 'Admin@test789',  # User's password
-        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',  # Typically 'localhost'
-        'PORT': '6543',  # Default port for PostgreSQL
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
-} 
+}
 
 
 # Password validation
