@@ -27,7 +27,7 @@
         }
 
         .container {
-            background-color: #e3f19125;
+            background-color: #e3f19146;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px;
@@ -50,6 +50,7 @@
             color: #f0f2f5; 
         }
         input[type="text"], input[type="password"] {
+            background-color: #e3f191a1;
             width: 95%;
             padding: 10px;
             margin-bottom: 20px;
@@ -101,6 +102,41 @@
         .message.error {
             color: #F44336; /* Red */
         }
+
+        /* Mobile Styles */
+        @media (max-width: 600px) {
+            body{
+                background-color: #555555a1;
+            }
+            .video-background{
+                display: none;
+            }
+            .container {
+                padding: 20px;
+                max-width: 90%; /* Make the container wider on small screens */
+            }
+    
+            h2 {
+                font-size: 22px; /* Reduce the font size of the heading */
+            }
+    
+            input[type="text"], input[type="password"] {
+                width: 100%; /* Make input fields take full width */
+                font-size: 14px; /* Slightly reduce font size */
+                padding: 8px; /* Adjust padding for input fields */
+            }
+    
+            button {
+                width: 100%; /* Make the button full width */
+                margin-left: 0; /* Remove the left margin */
+                padding: 10px; /* Adjust padding */
+                font-size: 14px; /* Reduce font size for the button */
+            }
+
+            .login-link {
+                font-size: 14px; /* Adjust font size for the login link */
+            }
+        }
     </style>
 </head>
 <body>
@@ -121,7 +157,7 @@
             <button type="submit">Login</button>
         </form>
         <p class="login-link">Don't have an account? <a href="{% url 'register' %}">Register here</a></p> 
-        <p class="login-link">Forgot your password? <a href="{% url 'password_reset' %}">Reset</a></p>
+        <p class="login-link">Forgot password? <a href="{% url 'password_reset' %}">Reset</a></p>
     </div>
 
     <script>
