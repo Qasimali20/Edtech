@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results</title>
+    <!-- <link rel="stylesheet" href="{% static 'styles/styles.css' %}"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0faff; /* Light blue background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #004d99; /* Darker blue for headings */
+            text-align: center;
+            margin: 30px 0;
+        }
+        .score-time {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center; /* Center-align score and time */
+        }
+        .result-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .correct {
+            background-color: #d4edda; /* Light green background for correct answers */
+            color: #155724; /* Dark green text color */
+        }
+        .incorrect {
+            background-color: #f8d7da; /* Light red background for incorrect answers */
+            color: #721c24; /* Dark red text color */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center-align buttons horizontally */
+            gap: 10px; /* Space between buttons */
+            margin-top: 20px; /* Margin above buttons */
+        }
+        .button {
+            background-color: #00aaff; /* Bright blue button */
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block; /* Ensure buttons stay inline */
+        }
+        .button:hover {
+            background-color: #0088cc; /* Darker blue on hover */
+        }
+        .answers-heading {
+            color: #004d99; /* Same color as heading for consistency */
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Results</h1>
+        <div class="score-time">
+            <p><strong>Score:</strong> {{ user_test.score }}</p>
+            <p><strong>Time Taken:</strong> {{ time_taken_display }}</p>
+        </div>
+
+        {% if user_answers %}
+            <h2 class="answers-heading">Your Answers</h2>
+            <div>
+                {% for answer in user_answers %}
+                    <div class="result-item {% if answer.is_correct %}correct{% else %}incorrect{% endif %}">
+                        <p><strong>Question:</strong> {{ answer.question.content }}</p>
+                        <p><strong>Your Answer:</strong> {{ answer.selected_option }}</p>
+                        <p><strong>Correct Answer:</strong> {{ answer.question.correct_option }}</p>
+                        <p><strong>Status:</strong> {% if answer.is_correct %}Correct{% else %}Incorrect{% endif %}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No answers were submitted for this test.</p>
+        {% endif %}
+
+        <!-- Container for buttons -->
+        <div class="button-container">
+            <!-- Button to return to the test list -->
+            <a href="{% url 'list_tests' %}" class="button">Back to Tests</a>
+            <!-- Button to view performance -->
+            <a href="{% url 'user_performance' %}" class="button">View Performance</a>
+        </div>
+    </div>
+</body>
+</html>

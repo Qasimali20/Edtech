@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ test.title }}</title>
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0faff; /* Light blue background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #004d99; /* Darker blue for headings */
+            text-align: center;
+            margin: 30px 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        legend {
+            font-size: 18px;
+            color: #004d99;
+            font-weight: bold;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        label {
+            font-size: 16px;
+            color: #333;
+            margin-right: 20px;
+        }
+        button {
+            background-color: #00aaff; /* Bright blue button */
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 20px auto; /* Center the button */
+            width: fit-content;
+        }
+        button:hover {
+            background-color: #0088cc; /* Darker blue on hover */
+        }
+        #timer {
+            font-size: 18px;
+            font-weight: bold;
+            color: #004d99;
+            margin-bottom: 20px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ test.title }}</h1>
+        <p>{{ test.description }}</p>
+        
+        <p id="timer">00m 00s</p> <!-- Timer display -->
+
+        {% if error_message %}
+            <p class="error">{{ error_message }}</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'submit_answers' test.id %}">
+            {% csrf_token %}
+            <div>
+                {% for question in questions %}
+                    <fieldset>
+                        <legend>{{ question.content }}</legend>
+                        {% if question.option_a %}
+                            <input type="radio" id="option_a_{{ question.id }}" name="question_{{ question.id }}" value="A">
+                            <label for="option_a_{{ question.id }}">{{ question.option_a }}</label><br>
+                        {% endif %}
+                        {% if question.option_b %}
+                            <input type="radio" id="option_b_{{ question.id }}" name="question_{{ question.id }}" value="B">
+                            <label for="option_b_{{ question.id }}">{{ question.option_b }}</label><br>
+                        {% endif %}
+                        {% if question.option_c %}
+                            <input type="radio" id="option_c_{{ question.id }}" name="question_{{ question.id }}" value="C">
+                            <label for="option_c_{{ question.id }}">{{ question.option_c }}</label><br>
+                        {% endif %}
+                        {% if question.option_d %}
+                            <input type="radio" id="option_d_{{ question.id }}" name="question_{{ question.id }}" value="D">
+                            <label for="option_d_{{ question.id }}">{{ question.option_d }}</label><br>
+                        {% endif %}
+                    </fieldset>
+                {% endfor %}
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const startTime = new Date().getTime();
+            const timerInput = document.createElement('input');
+            timerInput.type = 'hidden';
+            timerInput.name = 'timer_value';
+            document.querySelector('form').appendChild(timerInput);
+            
+            function updateTimer() {
+                const now = new Date().getTime();
+                const timeElapsed = Math.max(0, now - startTime);
+                const minutes = Math.floor((timeElapsed / (1000 * 60)) % 60);
+                const seconds = Math.floor((timeElapsed / 1000) % 60);
+                document.getElementById('timer').innerText = `${minutes}m ${seconds}s`;
+                timerInput.value = `${minutes}:${seconds}`; // Save timer value in the hidden field
+            }
+    
+            setInterval(updateTimer, 1000);
+        });
+    </script>
+    
+</body>
+</html>

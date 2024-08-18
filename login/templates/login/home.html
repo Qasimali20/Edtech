@@ -54,7 +54,7 @@
         }
 
         .background {
-            position:fixed;
+            position: fixed;
             background-repeat: no-repeat;
             background-size: cover;
             top: 0;
@@ -97,42 +97,45 @@
         }
 
         .course-item {
-            background-color: #555;
+            background-color: rgba(225, 245, 254, 0.8); /* Light blue with transparency */
             border-radius: 10px;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            padding-left: 20px;
-            padding-right: 20px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            margin-left: 10px;
-            margin-right: 10px;
+            padding: 20px;
+            margin: 10px;
             width: 280px;
             text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for better visibility */
+            transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+        }
+
+        .course-item:hover {
+            transform: translateY(-5px); /* Slight lift effect on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
         }
 
         .course-item h3 {
             font-size: 24px;
             margin-bottom: 10px;
+            color: #01579b; /* Slightly darker blue for headings */
         }
 
         .course-item p {
             font-size: 16px;
             margin-bottom: 20px;
-            color: #ece2e2;
+            color: #0277bd; /* Slightly lighter blue for text */
         }
 
         .course-item a {
             text-decoration: none;
             color: #fff;
-            background-color: #333;
+            background-color: #0288d1; /* Bright blue for buttons */
             padding: 10px 20px;
             border-radius: 5px;
             display: inline-block;
+            transition: background-color 0.3s; /* Smooth transition for hover effects */
         }
 
         .course-item a:hover {
-            background-color: #5f5b5b;
+            background-color: #0277bd; /* Slightly darker blue on hover */
         }
     </style>
 </head>
@@ -166,7 +169,7 @@
     <div class="content">
         <h1>Welcome to Edtech</h1>
         {% if user.is_authenticated %}
-            <p>Hi {{ user.username }}! We're glad to see you here.Prepare with us for Your Future.</p>
+            <p>Hi {{ user.username }}! We're glad to see you here. Prepare with us for Your Future.</p>
         {% else %}
             <p>Hi! We're glad to see you here. Prepare with us for Your Future.</p>
         {% endif %}
