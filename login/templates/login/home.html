@@ -33,11 +33,12 @@
             padding-left: 30px;
         }
 
-        header a {
+        header a,
+        header button {
             color: #fff;
             text-decoration: none;
             text-transform: uppercase;
-            font-size: 16px;
+            font-size: 16px; /* Ensuring consistent font size */
         }
 
         header li {
@@ -51,6 +52,14 @@
 
         header nav {
             float: right;
+        }
+
+        header button {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px; /* Ensuring consistent font size */
         }
 
         .background {
@@ -97,7 +106,7 @@
         }
 
         .course-item {
-            background-color: rgba(225, 245, 254, 0.8); /* Light blue with transparency */
+            background-color: #444; /* Lighter grey background */
             border-radius: 10px;
             padding: 20px;
             margin: 10px;
@@ -108,26 +117,26 @@
         }
 
         .course-item:hover {
-            transform: translateY(-5px); /* Slight lift effect on hover */
+            transform: translateY(-8px); /* Slight lift effect on hover */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
         }
 
         .course-item h3 {
             font-size: 24px;
             margin-bottom: 10px;
-            color: #01579b; /* Slightly darker blue for headings */
+            color: #dedfdf; /* Slightly darker blue for headings */
         }
 
         .course-item p {
             font-size: 16px;
             margin-bottom: 20px;
-            color: #0277bd; /* Slightly lighter blue for text */
+            color: #dedfdf; /* Slightly lighter blue for text */
         }
 
         .course-item a {
             text-decoration: none;
             color: #fff;
-            background-color: #0288d1; /* Bright blue for buttons */
+            background-color: #006ec2; /* Bright blue for buttons */
             padding: 10px 20px;
             border-radius: 5px;
             display: inline-block;
@@ -135,7 +144,7 @@
         }
 
         .course-item a:hover {
-            background-color: #0277bd; /* Slightly darker blue on hover */
+            background-color: #00518f; /* Slightly darker blue on hover */
         }
     </style>
 </head>
@@ -152,7 +161,7 @@
                         <li>
                             <form method="POST" action="{% url 'logout' %}">
                                 {% csrf_token %}
-                                <button type="submit" style="background:none;border:none;color:#fff;cursor:pointer;">Logout</button>
+                                <button type="submit">Logout</button>
                             </form>
                         </li>
                     {% else %}

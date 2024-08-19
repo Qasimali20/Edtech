@@ -11,13 +11,13 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0faff; /* Light blue background */
-            color: #333;
+            background-color: #2c2c2c; /* Dark background */
+            color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
         h1 {
-            color: #004d99; /* Darker blue for headings */
+            color: #e0e0e0; /* Light color for headings */
             text-align: center;
             margin: 30px 0;
         }
@@ -25,9 +25,9 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #333; /* Dark container background */
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .chart-container {
             width: 100%;
@@ -103,7 +103,22 @@
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#f4f4f4' /* Light color for Y axis labels */
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#f4f4f4' /* Light color for X axis labels */
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#f4f4f4' /* Light color for legend */
+                        }
                     }
                 }
             }
@@ -126,7 +141,22 @@
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#f4f4f4' /* Light color for Y axis labels */
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#f4f4f4' /* Light color for X axis labels */
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#f4f4f4' /* Light color for legend */
+                        }
                     }
                 }
             }
@@ -150,7 +180,22 @@
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#f4f4f4' /* Light color for Y axis labels */
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#f4f4f4' /* Light color for X axis labels */
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#f4f4f4' /* Light color for legend */
+                        }
                     }
                 }
             }
