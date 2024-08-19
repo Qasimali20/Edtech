@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,6 +57,126 @@
         form {
             display: inline-block;
         }
+
+        /* Style for the chatbot icon */
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 70px;
+            height: 70px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #chatbot-icon img {
+            width: 35px;
+            height: 35px;
+        }
+
+        /* Style for the chatbot window */
+        #chatbot-popup {
+            display: none; /* Ensure it's hidden initially */
+            position: fixed;
+            bottom: 100px; /* Adjusted for larger size */
+            right: 20px;
+            width: 300px; /* Increased width */
+            height: 500px; /* Increased height */
+            background-color: #222; /* Darker background */
+            border: 1px solid #555;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for visibility */
+        }
+
+        #chatbot-popup.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #chatbot-popup.hide {
+            opacity: 0;
+            transform: translateY(20px); /* Move the popup slightly down for hide effect */
+        }
+
+        #chatbot-popup header {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+        }
+
+        #chatbox {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border-bottom: 1px solid #555;
+            background-color: #111; /* Darker background for messages */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            max-width: 90%; /* Adjusted for more space */
+            word-wrap: break-word;
+            color: #fff; /* White text for readability */
+        }
+
+        .user-message {
+            background-color: #007bff; /* Blue background */
+            text-align: right;
+            color: #fff; /* White text */
+        }
+
+        .chatbot-message {
+            background-color: #444; /* Darker grey */
+            text-align: left;
+            color: #f4f4f4; /* Light text for contrast */
+        }
+
+        #chatbot-popup footer {
+            padding: 10px;
+            background-color: #333; /* Dark background for input area */
+            border-top: 1px solid #555;
+            display: flex;
+            align-items: center;
+        }
+
+        #chatbot-popup footer input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #444; /* Dark background */
+            color: #fff; /* White text */
+        }
+
+        #chatbot-popup footer button {
+            width: 70px; /* Adjusted button size */
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            margin-left: 10px; /* Space between input and button */
+        }
     </style>
 </head>
 <body>
@@ -74,5 +193,85 @@
             </form>
         </div>
     </div>
+
+    <!-- Chatbot Icon -->
+    <div id="chatbot-icon">
+        <img src="{% static 'chatbot-icon.png' %}" alt="Chatbot Icon">
+    </div>
+
+    <!-- Chatbot Popup -->
+    <div id="chatbot-popup">
+        <header>Ebot</header>
+        <div id="chatbox">
+            <!-- Chat history will be displayed here -->
+        </div>
+        <footer>
+            <form id="chat-form">
+                <input type="text" id="user-input" placeholder="Ask a question...">
+                <input type="hidden" id="session-id">
+                <button type="submit">Send</button>
+            </form>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure the chatbot is hidden on page load
+            const chatbotPopup = document.getElementById('chatbot-popup');
+            chatbotPopup.classList.add('hide');
+
+            // Toggle chatbot popup visibility
+            document.getElementById('chatbot-icon').addEventListener('click', function() {
+                if (chatbotPopup.classList.contains('hide')) {
+                    chatbotPopup.classList.remove('hide');
+                    chatbotPopup.classList.add('show');
+                } else {
+                    chatbotPopup.classList.remove('show');
+                    chatbotPopup.classList.add('hide');
+                }
+            });
+
+            // Handle chat form submission
+            document.getElementById('chat-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const inputField = document.getElementById('user-input');
+                const sessionIdField = document.getElementById('session-id');
+                const chatBox = document.getElementById('chatbox');
+
+                const userInput = inputField.value;
+                const sessionId = sessionIdField.value;
+
+                fetch('/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: `input=${encodeURIComponent(userInput)}&session_id=${encodeURIComponent(sessionId)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.session_id) {
+                        sessionIdField.value = data.session_id;
+                    }
+                    const chatHistory = data.chat_history;
+                    chatBox.innerHTML = ''; // Clear previous messages
+                    chatHistory.forEach(entry => {
+                        const p = document.createElement('p');
+                        p.className = `message ${entry.role.toLowerCase()}-message`;
+                        p.textContent = entry.content;
+                        chatBox.appendChild(p);
+                    });
+                    inputField.value = '';
+                    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+                });
+            });
+        });
+// Ensure that the chatbot icon and popup are displayed correctly
+    window.addEventListener('load', function() {
+    document.getElementById('chatbot-icon').style.display = 'flex';
+});
+</script>
 </body>
 </html>
+

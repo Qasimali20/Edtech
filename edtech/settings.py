@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'login',
     'testfunc',
     'forum',
+    'chatbot', 
 ]
 
 MIDDLEWARE = [

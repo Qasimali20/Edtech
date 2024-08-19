@@ -6,4 +6,5 @@ urlpatterns = [
     path('',include('login.urls')),
     path('',include('testfunc.urls')),
     path('',include('forum.urls')),
+    path('',include('chatbot.urls')),
 ]
