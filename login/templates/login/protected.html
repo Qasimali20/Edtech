@@ -65,6 +65,7 @@
         <p>You have successfully logged in. This is a protected page.</p>
         <div class="button-group">
             <a href="{% url 'list_tests' %}">Take a Test</a>
+            <a href="{% url 'thread_list' %}">Go to Threads</a>
             <a href="{% url 'home' %}">Back to Home</a>
             <form method="POST" action="{% url 'logout' %}">
                 {% csrf_token %}
