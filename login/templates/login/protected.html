@@ -1,6 +1,8 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +10,17 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #2c2c2c; /* Dark background */
+            background-color: #2c2c2c;
             color: #f4f4f4;
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Full viewport height */
+            height: 100vh;
+            margin: 0;
         }
+
         .container {
-            background-color: #333; /* Dark container background */
+            background-color: #444;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 30px;
@@ -26,34 +28,42 @@
             width: 100%;
             text-align: center;
         }
+
         h2 {
-            color: #e0e0e0; /* Light color for headings */
-            font-size: 2rem;
+            color: #f4f4f4;
             margin-bottom: 20px;
+            font-size: 24px;
         }
+
         p {
-            font-size: 1rem;
+            font-size: 18px;
             color: #f4f4f4;
         }
+
         .button-group {
             margin-top: 20px;
         }
-        a, button {
-            background-color: #007bff; /* Blue background */
-            color: white;
+
+        a,
+        button {
+            background-color: #007bff;
+            color: #fff;
             padding: 10px 20px;
             border-radius: 5px;
             border: none;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin: 5px;
             display: inline-block;
         }
-        a:hover, button:hover {
-            background-color: #0056b3; /* Darker blue */
+
+        a:hover,
+        button:hover {
+            background-color: #0056b3;
         }
+
         form {
             display: inline-block;
         }
@@ -63,8 +73,8 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             background-color: #007bff;
             border-radius: 50%;
             display: flex;
@@ -75,19 +85,19 @@
         }
 
         #chatbot-icon img {
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
         }
 
         /* Style for the chatbot window */
         #chatbot-popup {
-            display: none; /* Ensure it's hidden initially */
+            display: none;
             position: fixed;
-            bottom: 100px; /* Adjusted for larger size */
+            bottom: 90px;
             right: 20px;
-            width: 300px; /* Increased width */
-            height: 500px; /* Increased height */
-            background-color: #222; /* Darker background */
+            width: 380px;
+            height: 600px;
+            background-color: #333;
             border: 1px solid #555;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -95,7 +105,9 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for visibility */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         #chatbot-popup.show {
@@ -106,7 +118,7 @@
 
         #chatbot-popup.hide {
             opacity: 0;
-            transform: translateY(20px); /* Move the popup slightly down for hide effect */
+            transform: translateY(20px);
         }
 
         #chatbot-popup header {
@@ -118,12 +130,12 @@
             text-align: center;
         }
 
-        #chatbox {
+        #chatbot-popup #chatbox {
             flex: 1;
             padding: 10px;
             overflow-y: auto;
             border-bottom: 1px solid #555;
-            background-color: #111; /* Darker background for messages */
+            background-color: #222;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -133,52 +145,52 @@
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 8px;
-            max-width: 90%; /* Adjusted for more space */
+            max-width: 80%;
             word-wrap: break-word;
-            color: #fff; /* White text for readability */
+            color: #fff;
         }
 
         .user-message {
-            background-color: #007bff; /* Blue background */
-            text-align: right;
-            color: #fff; /* White text */
+            background-color: #007bff;
+            align-self: flex-end;
         }
 
         .chatbot-message {
-            background-color: #444; /* Darker grey */
+            background-color: #444;
+            align-self: flex-start;
             text-align: left;
-            color: #f4f4f4; /* Light text for contrast */
         }
 
         #chatbot-popup footer {
             padding: 10px;
-            background-color: #333; /* Dark background for input area */
+            background-color: #333;
             border-top: 1px solid #555;
             display: flex;
             align-items: center;
         }
 
         #chatbot-popup footer input[type="text"] {
-            flex: 1;
+            flex: 3;
             padding: 8px;
             border-radius: 5px;
             border: 1px solid #555;
-            background-color: #444; /* Dark background */
-            color: #fff; /* White text */
+            background-color: #444;
+            color: #fff;
         }
 
         #chatbot-popup footer button {
-            width: 70px; /* Adjusted button size */
+            width: 60px;
             padding: 8px;
             border-radius: 5px;
             border: none;
             background-color: #007bff;
             color: white;
             cursor: pointer;
-            margin-left: 10px; /* Space between input and button */
+            margin-left: 10px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>Protected Page</h2>
@@ -201,77 +213,82 @@
 
     <!-- Chatbot Popup -->
     <div id="chatbot-popup">
-        <header>Ebot</header>
+        <header>Edbot</header>
         <div id="chatbox">
             <!-- Chat history will be displayed here -->
         </div>
         <footer>
             <form id="chat-form">
-                <input type="text" id="user-input" placeholder="Ask a question...">
-                <input type="hidden" id="session-id">
+                <input type="text" name="message" id="message-input" placeholder="Type your message">
                 <button type="submit">Send</button>
             </form>
         </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Ensure the chatbot is hidden on page load
-            const chatbotPopup = document.getElementById('chatbot-popup');
-            chatbotPopup.classList.add('hide');
+        document.getElementById('chatbot-icon').addEventListener('click', function () {
+            const popup = document.getElementById('chatbot-popup');
+            if (popup.classList.contains('show')) {
+                popup.classList.remove('show');
+                popup.classList.add('hide');
+            } else {
+                popup.classList.remove('hide');
+                popup.classList.add('show');
+            }
+        });
 
-            // Toggle chatbot popup visibility
-            document.getElementById('chatbot-icon').addEventListener('click', function() {
-                if (chatbotPopup.classList.contains('hide')) {
-                    chatbotPopup.classList.remove('hide');
-                    chatbotPopup.classList.add('show');
-                } else {
-                    chatbotPopup.classList.remove('show');
-                    chatbotPopup.classList.add('hide');
-                }
-            });
+        document.getElementById('chat-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form from submitting the default way
 
-            // Handle chat form submission
-            document.getElementById('chat-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const inputField = document.getElementById('user-input');
-                const sessionIdField = document.getElementById('session-id');
-                const chatBox = document.getElementById('chatbox');
+            const formData = new FormData(this);
 
-                const userInput = inputField.value;
-                const sessionId = sessionIdField.value;
-
-                fetch('/chat/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    body: `input=${encodeURIComponent(userInput)}&session_id=${encodeURIComponent(sessionId)}`
-                })
+            fetch('/chat/', { // Ensure this matches your URL pattern
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
+                },
+                body: new URLSearchParams(formData) // Convert FormData to URLSearchParams
+            })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.session_id) {
-                        sessionIdField.value = data.session_id;
+                    if (data.error) {
+                        console.error('Error:', data.error);
+                        // Handle the error message (e.g., show an alert or display an error message)
+                    } else {
+                        console.log('Response:', data.response);
+                        // Update the chat interface
+                        addMessage('user', formData.get('message'));
+                        addMessage('chatbot', data.response);
                     }
-                    const chatHistory = data.chat_history;
-                    chatBox.innerHTML = ''; // Clear previous messages
-                    chatHistory.forEach(entry => {
-                        const p = document.createElement('p');
-                        p.className = `message ${entry.role.toLowerCase()}-message`;
-                        p.textContent = entry.content;
-                        chatBox.appendChild(p);
-                    });
-                    inputField.value = '';
-                    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
                 });
-            });
         });
-// Ensure that the chatbot icon and popup are displayed correctly
-    window.addEventListener('load', function() {
-    document.getElementById('chatbot-icon').style.display = 'flex';
-});
-</script>
-</body>
-</html>
 
+        function addMessage(sender, message) {
+            const chatbox = document.getElementById('chatbox');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.classList.add(sender === 'user' ? 'user-message' : 'chatbot-message');
+            messageElement.textContent = message;
+            chatbox.appendChild(messageElement);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+</body>
+
+</html>
