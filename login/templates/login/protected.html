@@ -21,9 +21,9 @@
         }
 
         .content {
-            background-color: rgba(0, 0, 0, 0.6); /* Darker background */
+            background-color: rgba(0, 0, 0, 0.8); /* Darker background */
             border-radius: 12px; /* Increased border-radius */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Larger shadow */
             padding: 40px; /* Increased padding */
             max-width: 700px; /* Increased width */
             width: 100%;
@@ -42,31 +42,47 @@
         }
 
         .button-group {
-            margin-top: 30px; /* Increased margin */
-        }
+    margin-top: 30px; /* Increased margin */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        a,
-        button {
-            background-color: #0288d1; /* Bright blue */
-            color: #fff;
-            padding: 12px 24px; /* Increased padding */
-            border-radius: 6px; /* Increased border-radius */
-            border: none;
-            text-decoration: none;
-            font-size: 18px; /* Increased font size */
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin: 8px; /* Increased margin */
-            display: inline-block;
-        }
+a,
+button {
+    display: block; /* Ensure both anchor and button are block elements */
+    background-color: #0288d1; /* Bright blue */
+    color: #fff;
+    padding: 12px 24px; /* Increased padding */
+    border-radius: 6px; /* Increased border-radius */
+    border: none;
+    text-decoration: none;
+    font-size: 18px; /* Increased font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 8px 0; /* Vertical margin for spacing between buttons */
+    text-align: center; /* Center the text */
+    width: 100%; /* Full width */
+    max-width: 300px; /* Optional: limit the maximum width */
+    box-sizing: border-box; /* Include padding and border in the element's width and height */
+}
+
+form {
+    display: flex;
+    justify-content: center; /* Center the form content */
+    width: 100%; /* Ensure the form takes full width */
+    margin: 0; /* Remove any default margin */
+}
+
+form button {
+    width: 100%;
+    max-width: 300px; /* Optional: limit the maximum width */
+}
+
 
         a:hover,
         button:hover {
             background-color: #0277bd; /* Slightly darker blue on hover */
-        }
-
-        form {
-            display: inline-block;
         }
 
         /* Style for the chatbot icon */
@@ -90,6 +106,7 @@
             height: 35px; /* Increased size */
         }
 
+        /* Style for the chatbot window */
         #chatbot-popup {
             display: none;
             position: fixed;
@@ -171,7 +188,7 @@
         }
 
         #chatbot-popup footer input[type="text"] {
-            flex: 7;
+            flex: 3;
             padding: 10px; /* Increased padding */
             border-radius: 6px; /* Increased border-radius */
             border: 1px solid #555;
@@ -188,7 +205,7 @@
             background-color: #0288d1; /* Match button color */
             color: white;
             cursor: pointer;
-            margin-left: 8px; /* Increased margin */
+            margin-left: 12px; /* Increased margin */
             font-size: 16px; /* Increased font size */
         }
     </style>
@@ -216,82 +233,47 @@
 
     <!-- Chatbot Popup -->
     <div id="chatbot-popup">
-        <header>Edbot</header>
+        <header>Chat with us!</header>
         <div id="chatbox">
-            <!-- Chat history will be displayed here -->
+            <!-- Messages will be appended here -->
         </div>
         <footer>
-            <form id="chat-form">
-                <input type="text" name="message" id="message-input" placeholder="Type your message">
-                <button type="submit">Send</button>
-            </form>
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="send-message-btn">Send</button>
         </footer>
     </div>
 
     <script>
+        // Toggle the chatbot popup
         document.getElementById('chatbot-icon').addEventListener('click', function () {
-            const popup = document.getElementById('chatbot-popup');
-            if (popup.classList.contains('show')) {
-                popup.classList.remove('show');
-                popup.classList.add('hide');
-            } else {
-                popup.classList.remove('hide');
-                popup.classList.add('show');
-            }
+            const chatbotPopup = document.getElementById('chatbot-popup');
+            chatbotPopup.classList.toggle('show');
         });
 
-        document.getElementById('chat-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent form from submitting the default way
+        // Handle chatbot message sending
+        document.getElementById('send-message-btn').addEventListener('click', function () {
+            const input = document.getElementById('chatbot-input');
+            const message = input.value.trim();
 
-            const formData = new FormData(this);
+            if (message) {
+                const chatbox = document.getElementById('chatbox');
+                const userMessage = document.createElement('div');
+                userMessage.classList.add('message', 'user-message');
+                userMessage.textContent = message;
+                chatbox.appendChild(userMessage);
 
-            fetch('/chat/', { // Ensure this matches your URL pattern
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
-                },
-                body: new URLSearchParams(formData) // Convert FormData to URLSearchParams
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        console.error('Error:', data.error);
-                        // Handle the error message (e.g., show an alert or display an error message)
-                    } else {
-                        console.log('Response:', data.response);
-                        // Update the chat interface
-                        addMessage('user', formData.get('message'));
-                        addMessage('chatbot', data.response);
-                    }
-                });
-        });
+                // Here you would send the message to the server and get the bot's response
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'chatbot-message');
+                botMessage.textContent = "This is a bot's response."; // Placeholder response
+                chatbox.appendChild(botMessage);
 
-        function addMessage(sender, message) {
-            const chatbox = document.getElementById('chatbox');
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message');
-            messageElement.classList.add(sender === 'user' ? 'user-message' : 'chatbot-message');
-            messageElement.textContent = message;
-            chatbox.appendChild(messageElement);
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
+                chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
 
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
+                input.value = ''; // Clear the input field
             }
-            return cookieValue;
-        }
+        });
     </script>
-
 </body>
 
 </html>

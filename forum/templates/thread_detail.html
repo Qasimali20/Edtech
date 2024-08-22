@@ -9,20 +9,20 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #2c2c2c; /* Dark background */
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Dark gradient background */
             color: #f4f4f4;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            width: 90%;
-            max-width: 1200px;
+            width: 85%; /* Reduced width to make container smaller */
+            max-width: 900px; /* Reduced max-width for a more contained look */
             margin: 20px auto;
             padding: 20px;
-            background-color: #333; /* Dark container background */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: rgba(0, 0, 0, 0.6);  /* Dark container background */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Subtle shadow */
         }
 
         h1, h2 {
@@ -34,32 +34,33 @@
         p {
             font-size: 1rem;
             margin-bottom: 10px;
+            color: #ddd; /* Light grey text */
         }
 
         .post, .comment {
             padding: 15px;
             border: 1px solid #444; /* Darker border */
-            border-radius: 5px;
+            border-radius: 8px; /* Rounded corners */
             margin-bottom: 15px;
-            background-color: #444; /* Darker background for posts and comments */
-        }
+            background-color: rgba(119, 110, 110, 0.134) ;        }
 
         .post p strong, .comment p strong {
             font-weight: bold;
-        }
+            }
 
         .btn-primary {
-            background-color: #007bff;
+            background-color: #00aaff; /* Bright blue button */
             color: white;
             padding: 10px 20px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 6px; /* Rounded corners */
             display: inline-block;
             margin-top: 10px;
+            font-size: 1rem; /* Adjusted font size */
         }
 
         .btn-primary:hover {
-            background-color: #0056b3;
+            background-color: #0088cc; /* Darker blue on hover */
         }
 
         form {
@@ -71,28 +72,40 @@
             max-width: 600px;
             height: 100px;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 6px; /* Rounded corners */
             border: 1px solid #666; /* Darker border */
-            background-color: #555; /* Darker background for textarea */
+            background-color: rgba(119, 110, 110, 0.134) ;   
             color: #f4f4f4; /* Light color for text */
             font-size: 1rem;
             box-sizing: border-box; /* Ensure padding is included in width */
             resize: vertical; /* Allow vertical resizing only */
         }
 
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            border-radius: 6px; /* Rounded corners */
+            border: 1px solid #666; /* Darker border */
+            background-color: rgba(119, 110, 110, 0.134) ;   
+            color: #f4f4f4; /* Light color for text */
+            font-size: 1rem;
+            box-sizing: border-box; /* Ensure padding is included in width */
+        }
+
         button {
-            background-color: #007bff;
+            background-color: #00aaff; /* Bright blue button */
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px; /* Rounded corners */
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1rem; /* Adjusted font size */
             margin-top: 10px;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #0088cc; /* Darker blue on hover */
         }
 
         .navigation {
@@ -102,16 +115,16 @@
         }
 
         .navigation a {
-            background-color: #007bff;
+            background-color: #00aaff; /* Bright blue button */
             color: white;
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 6px; /* Rounded corners */
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 1rem; /* Adjusted font size */
         }
 
         .navigation a:hover {
-            background-color: #0056b3;
+            background-color: #0088cc; /* Darker blue on hover */
         }
     </style>
 </head>
