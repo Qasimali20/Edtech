@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,58 +9,60 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #2c2c2c;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Dark gradient background */
             color: #f4f4f4;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background-color: #444;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 30px;
-            max-width: 400px;
-            width: 100%;
             text-align: center;
         }
 
+        .content {
+            background-color: rgba(0, 0, 0, 0.6); /* Darker background */
+            border-radius: 12px; /* Increased border-radius */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow */
+            padding: 40px; /* Increased padding */
+            max-width: 700px; /* Increased width */
+            width: 100%;
+        }
+
         h2 {
-            color: #f4f4f4;
-            margin-bottom: 20px;
-            font-size: 24px;
+            color: #fff; /* White text for headings */
+            margin-bottom: 25px; /* Increased margin */
+            font-size: 28px; /* Increased font size */
         }
 
         p {
-            font-size: 18px;
-            color: #f4f4f4;
+            font-size: 20px; /* Increased font size */
+            color: #ddd; /* Light gray text for paragraphs */
+            margin-bottom: 30px; /* Increased margin */
         }
 
         .button-group {
-            margin-top: 20px;
+            margin-top: 30px; /* Increased margin */
         }
 
         a,
         button {
-            background-color: #007bff;
+            background-color: #0288d1; /* Bright blue */
             color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px; /* Increased padding */
+            border-radius: 6px; /* Increased border-radius */
             border: none;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 18px; /* Increased font size */
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin: 5px;
+            margin: 8px; /* Increased margin */
             display: inline-block;
         }
 
         a:hover,
         button:hover {
-            background-color: #0056b3;
+            background-color: #0277bd; /* Slightly darker blue on hover */
         }
 
         form {
@@ -73,9 +74,9 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 60px;
-            height: 60px;
-            background-color: #007bff;
+            width: 70px; /* Increased width */
+            height: 70px; /* Increased height */
+            background-color: #0288d1; /* Match button color */
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -85,22 +86,21 @@
         }
 
         #chatbot-icon img {
-            width: 30px;
-            height: 30px;
+            width: 35px; /* Increased size */
+            height: 35px; /* Increased size */
         }
 
-        /* Style for the chatbot window */
         #chatbot-popup {
             display: none;
             position: fixed;
             bottom: 90px;
             right: 20px;
-            width: 380px;
-            height: 600px;
+            width: 400px; /* Increased width */
+            height: 580px; /* Increased height */
             background-color: #333;
             border: 1px solid #555;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 12px; /* Increased border-radius */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Larger shadow */
             z-index: 1000;
             overflow: hidden;
             display: flex;
@@ -122,17 +122,18 @@
         }
 
         #chatbot-popup header {
-            padding: 10px;
-            background-color: #007bff;
+            padding: 12px; /* Increased padding */
+            background-color: #0288d1; /* Match button color */
             color: white;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-top-left-radius: 12px; /* Increased border-radius */
+            border-top-right-radius: 12px; /* Increased border-radius */
             text-align: center;
+            font-size: 20px; /* Increased font size */
         }
 
         #chatbot-popup #chatbox {
             flex: 1;
-            padding: 10px;
+            padding: 12px; /* Increased padding */
             overflow-y: auto;
             border-bottom: 1px solid #555;
             background-color: #222;
@@ -142,16 +143,16 @@
         }
 
         .message {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
+            padding: 12px; /* Increased padding */
+            margin-bottom: 12px; /* Increased margin */
+            border-radius: 10px; /* Increased border-radius */
             max-width: 80%;
             word-wrap: break-word;
             color: #fff;
         }
 
         .user-message {
-            background-color: #007bff;
+            background-color: #0288d1;
             align-self: flex-end;
         }
 
@@ -162,7 +163,7 @@
         }
 
         #chatbot-popup footer {
-            padding: 10px;
+            padding: 12px; /* Increased padding */
             background-color: #333;
             border-top: 1px solid #555;
             display: flex;
@@ -170,29 +171,31 @@
         }
 
         #chatbot-popup footer input[type="text"] {
-            flex: 3;
-            padding: 8px;
-            border-radius: 5px;
+            flex: 7;
+            padding: 10px; /* Increased padding */
+            border-radius: 6px; /* Increased border-radius */
             border: 1px solid #555;
             background-color: #444;
             color: #fff;
+            font-size: 16px; /* Increased font size */
         }
 
         #chatbot-popup footer button {
-            width: 60px;
-            padding: 8px;
-            border-radius: 5px;
+            width: 70px; /* Increased width */
+            padding: 10px; /* Increased padding */
+            border-radius: 6px; /* Increased border-radius */
             border: none;
-            background-color: #007bff;
+            background-color: #0288d1; /* Match button color */
             color: white;
             cursor: pointer;
-            margin-left: 10px;
+            margin-left: 8px; /* Increased margin */
+            font-size: 16px; /* Increased font size */
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="content">
         <h2>Protected Page</h2>
         <p>You have successfully logged in. This is a protected page.</p>
         <div class="button-group">

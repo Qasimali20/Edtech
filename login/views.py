@@ -28,9 +28,12 @@ def register_view(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            # password_confirm = form.cleaned_data['password_confirm']
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Username already exists.')
             User.objects.create_user(username=username, email=email, password=password)
             messages.success(request, 'Registration successful! You can now log in.')
-            return redirect('login')  # Redirect to login page after successful registration
+            # return redirect('login')  # Redirect to login page after successful registration
     else:
         form = registerForm()
 
@@ -68,9 +71,17 @@ def logout_view(request):
     return redirect('home')
 
 @login_required
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        messages.success(request, 'Your account has been deleted successfully.')
+        return redirect('login')  # Redirect to the homepage or a different page after deletion
+    return render(request, 'login/delete_account.html')
+
+@login_required
 def profile_view(request):
     return render(request, 'login/profile.html')
-
 # Protected view
 class ProtectedView(LoginRequiredMixin, View):
     login_url = '/login/'
@@ -105,10 +116,11 @@ class RequestPasswordResetView(View):
             )
 
             messages.success(request, 'Password reset link sent to your email.')
-            return render(request, 'login/request_reset.html')
+            return render(request, 'login/request_reset.html', {'reset_sent': True})
         else:
             messages.error(request, 'Username not found.')
-            return render(request, 'login/request_reset.html')
+            return render(request, 'login/request_reset.html', {'reset_sent': False})
+
 
 # Password Reset Confirm View
 class PasswordResetConfirmView(View):

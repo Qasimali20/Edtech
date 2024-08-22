@@ -15,13 +15,19 @@
             height: 100%;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: auto; /* Enable scrolling */
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Dark gradient background */
+            color: #f4f4f4; /* Light text color */
         }
 
         header {
-            background-color: rgb(17, 17, 17);
+            background-color: rgba(0, 0, 0, 0.6); /* Darker background */
             color: #f4f4f4;
-            padding-top: 30px;
-            min-height: 70px;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
 
         header .branding {
@@ -31,35 +37,47 @@
         .branding h1 {
             margin: 0;
             padding-left: 30px;
+            font-size: 24px;
         }
 
-        header a,
-        header button {
+        header a, header .nav-button {
             color: #fff;
             text-decoration: none;
             text-transform: uppercase;
-            font-size: 16px; /* Ensuring consistent font size */
+            font-size: 16px; /* Ensure font size is consistent */
+            padding: 10px 10px; /* Same padding for consistency */
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s; /* Smooth transition for hover effects */
+        }
+
+        header a:hover, header .nav-button:hover {
+            text-decoration: none; /* Add underline for hover effect */
+        }
+
+        header .nav-button {
+            background: none; /* Remove default background */
+            border: none; /* Remove default border */
+            cursor: pointer;
+            font-size: 16px; /* Ensure font size matches */
+            color: #fff; /* Match text color with links */
+        }
+
+        header .nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.2); /* Add a slight background color on hover */
         }
 
         header li {
             float: left;
             display: inline;
-            padding-left: 20px;
-            padding-right: 30px;
+            padding-left: 15px;
+            padding-right: 20px;
             padding-top: 0;
             padding-bottom: 0;
         }
 
         header nav {
             float: right;
-        }
-
-        header button {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px; /* Ensuring consistent font size */
         }
 
         .background {
@@ -85,17 +103,17 @@
         .content {
             position: relative;
             text-align: center;
-            padding-top: 130px; /* Adjusted for fixed header */
+            padding-top: 80px; /* Adjusted for fixed header */
             padding-bottom: 50px;
             animation: changeColor 20s infinite;
         }
 
         @keyframes changeColor {
-            0% { color: black; }
-            25% { color: white; }
-            50% { color: white; }
-            75% { color: white; }
-            100% { color: black; }
+            0% { color: #fff; }
+            25% { color: #ddd; }
+            50% { color: #ddd; }
+            75% { color: #ddd; }
+            100% { color: #fff; }
         }
 
         .courses-grid {
@@ -106,37 +124,37 @@
         }
 
         .course-item {
-            background-color: #444; /* Lighter grey background */
+            background-color: rgba(30, 30, 30, 0.8); /* Darker background for course items */
             border-radius: 10px;
             padding: 20px;
             margin: 10px;
             width: 280px;
             text-align: left;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for better visibility */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for better visibility */
             transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
         }
 
         .course-item:hover {
-            transform: translateY(-8px); /* Slight lift effect on hover */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+            transform: translateY(-5px); /* Slight lift effect on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Enhanced shadow on hover */
         }
 
         .course-item h3 {
             font-size: 24px;
             margin-bottom: 10px;
-            color: #dedfdf; /* Slightly darker blue for headings */
+            color: #fff; /* White text for headings */
         }
 
         .course-item p {
             font-size: 16px;
             margin-bottom: 20px;
-            color: #dedfdf; /* Slightly lighter blue for text */
+            color: #ddd; /* Light gray text color */
         }
 
         .course-item a {
             text-decoration: none;
             color: #fff;
-            background-color: #006ec2; /* Bright blue for buttons */
+            background-color: #0288d1; /* Bright blue for buttons */
             padding: 10px 20px;
             border-radius: 5px;
             display: inline-block;
@@ -144,7 +162,7 @@
         }
 
         .course-item a:hover {
-            background-color: #00518f; /* Slightly darker blue on hover */
+            background-color: #0277bd; /* Slightly darker blue on hover */
         }
     </style>
 </head>
@@ -158,15 +176,16 @@
                 <ul>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'protected' %}">Protected Page</a></li>
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
                         <li>
                             <form method="POST" action="{% url 'logout' %}">
                                 {% csrf_token %}
-                                <button type="submit">Logout</button>
+                                <button type="submit" class="nav-button">Logout</button>
                             </form>
                         </li>
                     {% else %}
                         <li><a href="{% url 'login' %}">Login</a></li>
-                        <li><a href="{% url 'register' %}">Register</a></li>
+                        <li><a href="{% url 'register' %}">Signup</a></li>
                     {% endif %}
                 </ul>
             </nav>

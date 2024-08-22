@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .container h2 {
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .container p {
+            color: #aaa;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .container a {
+            display: inline-block;
+            background-color: #007bff; /* Blue background */
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .container a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Profile</h2>
+        <p>Welcome, {{ user.username }}!</p>
+        <a href="{% url 'delete_account' %}">Delete Account</a>
+    </div>
+</body>
+</html>

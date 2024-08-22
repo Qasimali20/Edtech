@@ -1,171 +1,159 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}"> -->
     <style>
         body {
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-            z-index: -1; 
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Updated gradient for a closer match */
+            font-family: 'Arial', sans-serif;
         }
 
         .container {
-            background-color: #e3f19146;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 400px;
-            width: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Updated to be more transparent */
+            padding: 40px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
-        h2 {
-            color: #f0f2f5; 
-            margin-bottom: 20px;
-            font-size: 26px;
+
+        .container h2 {
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 24px;
         }
-        form {
+
+        .container label {
+            color: #aaa;
             text-align: left;
-        }
-        label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: normal;
-            color: #f0f2f5; 
+            margin-bottom: 5px;
+            font-size: 14px;
         }
-        input[type="text"], input[type="password"] {
-            background-color: #e3f191a1;
-            width: 95%;
+
+        .container input[type="text"], 
+        .container input[type="password"] {
+            width: 100%;
             padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #333; 
-            color: #f0f2f5;
             border: none;
-            width: 80%;
-            margin-left: 38px;
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-top: 12px;
-            padding-bottom: 12px;
             border-radius: 5px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1); /* Updated to have a slight transparency */
+            color: #fff;
+        }
+
+        .container input[type="text"]::placeholder, 
+        .container input[type="password"]::placeholder {
+            color: #bbb; /* Placeholder text color */
+        }
+
+        .container input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .container .show-password-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .container .show-password-container label {
+            margin-left: 5px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .container button {
+            background-color: #007bff;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #fff;
             cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
         }
-        button:hover {
-            background-color: #5f5b5b; 
+
+        .container button:hover {
+            background-color: #0056b3;
         }
-        .login-link {
+
+        .container .login-link {
             margin-top: 20px;
-            font-size: 16px;
+            color: #bbb;
+            font-size: 14px;
         }
-        .login-link a {
-            color: #f0f2f5; 
-            text-decoration: none;
+
+        .container .login-link a {
+            color: #fff;
+            /* text-decoration: underline; */
         }
-        .login-link a:hover {
-            text-decoration: underline;
-        }
+
         .messages {
             margin-bottom: 20px;
         }
+
         .message {
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 10px;
             font-size: 16px;
         }
+
         .message.success {
-            color: #4CAF50; /* Green */
+            color: #4CAF50;
         }
+
         .message.error {
-            color: #F44336; /* Red */
+            color: white;
+            background-color: #b02920;
         }
 
-        /* Mobile Styles */
         @media (max-width: 600px) {
-            body{
-                background-color: #555555a1;
-            }
-            .video-background{
-                display: none;
-            }
             .container {
-                padding: 20px;
-                max-width: 90%; /* Make the container wider on small screens */
-            }
-    
-            h2 {
-                font-size: 22px; /* Reduce the font size of the heading */
-            }
-    
-            input[type="text"], input[type="password"] {
-                width: 100%; /* Make input fields take full width */
-                font-size: 14px; /* Slightly reduce font size */
-                padding: 8px; /* Adjust padding for input fields */
-            }
-    
-            button {
-                width: 100%; /* Make the button full width */
-                margin-left: 0; /* Remove the left margin */
-                padding: 10px; /* Adjust padding */
-                font-size: 14px; /* Reduce font size for the button */
-            }
-
-            .login-link {
-                font-size: 14px; /* Adjust font size for the login link */
+                width: 90%;
             }
         }
     </style>
 </head>
 <body>
-    <video class="video-background" autoplay muted loop>
-        <source src="{% static 'assets/with LEARNING .mp4' %}" type="video/mp4">       
-        Your browser does not support the video tag.
-    </video>
-    
     <div class="container">
-        <h2>Login</h2>
+        <h2>Sign in</h2>
         <div class="messages"></div>
         <form id="loginForm" method="POST" action="{% url 'login' %}">
             {% csrf_token %}
-            <label for="username">Username</label>
+            <label for="username">Name</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
+            <div class="show-password-container">
+                <input type="checkbox" id="showPassword"> 
+                <label for="showPassword">Show Password</label>
+            </div>
+            <button type="submit">Sign in</button>
+            <!-- <div class="login-link">
+                <input type="checkbox" id="remember" name="remember"> Remember me
+            </div> -->
         </form>
-        <p class="login-link">Don't have an account? <a href="{% url 'register' %}">Register here</a></p> 
-        <p class="login-link">Forgot password? <a href="{% url 'password_reset' %}">Reset</a></p>
+        <p class="login-link">Don’t have an account? <a href="{% url 'register' %}">Sign up</a></p>
+        <p class="login-link"><a href="{% url 'password_reset' %}">Forgot password?</a></p>
     </div>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
 
             const messagesDiv = document.querySelector('.messages');
-            messagesDiv.innerHTML = ''; // Clear previous messages
+            messagesDiv.innerHTML = '';
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -189,14 +177,22 @@
                 });
 
                 if (response.ok) {
-                    // showMessage('Login successful!', 'success');
-                    window.location.href = '{% url "protected" %}'; // Redirect to protected page
+                    window.location.href = '{% url "protected" %}';
                 } else {
                     const result = await response.json();
                     showMessage(result.message || 'Login failed. Please try again.', 'error');
                 }
             } catch (error) {
                 showMessage('An error occurred. Please try again later.', 'error');
+            }
+        });
+
+        document.getElementById('showPassword').addEventListener('change', function() {
+            const passwordField = document.getElementById('password');
+            if (this.checked) {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
             }
         });
 

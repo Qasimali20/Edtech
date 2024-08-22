@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Same gradient as other pages */
+            font-family: 'Arial', sans-serif; /* Matching font */
+            color: #f4f4f4; /* Light text color */
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.6); /* Dark transparent background */
+            padding: 40px;
+            border-radius: 10px;
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        p {
+            color: #ddd; /* Light gray text color */
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between buttons */
+        }
+
+        .button-group form, 
+        .button-group a {
+            width: 100%; /* Ensure full width */
+        }
+
+        button, 
+        .cancel-button {
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            color: #fff;
+            width: 100%; /* Ensure buttons take full width */
+            box-sizing: border-box; /* Ensure padding does not affect width */
+        }
+
+        button {
+            background-color: #b02920; /* Red background for delete action */
+        }
+
+        button:hover {
+            background-color: #900; /* Darker red on hover */
+        }
+
+        .cancel-button {
+            background-color: #007bff; /* Blue background for cancel action */
+            text-decoration: none; /* Remove underline from anchor element */
+        }
+
+        .cancel-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Delete Your Account</h2>
+        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+        <div class="button-group">
+            <form method="POST" action="{% url 'delete_account' %}">
+                {% csrf_token %}
+                <button type="submit">Delete Account</button>
+            </form>
+            <a href="{% url 'profile' %}" class="cancel-button">Cancel</a>
+        </div>
+    </div>
+</body>
+</html>
