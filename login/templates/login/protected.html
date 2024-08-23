@@ -9,7 +9,8 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Dark gradient background */
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            /* Dark gradient background */
             color: #f4f4f4;
             margin: 0;
             padding: 0;
@@ -21,65 +22,106 @@
         }
 
         .content {
-            background-color: rgba(0, 0, 0, 0.6); /* Darker background */
-            border-radius: 12px; /* Increased border-radius */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow */
-            padding: 40px; /* Increased padding */
-            max-width: 700px; /* Increased width */
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Darker background */
+            border-radius: 12px;
+            /* Increased border-radius */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            /* Larger shadow */
+            padding: 40px;
+            /* Increased padding */
+            max-width: 700px;
+            /* Increased width */
             width: 100%;
         }
 
         h2 {
-            color: #fff; /* White text for headings */
-            margin-bottom: 25px; /* Increased margin */
-            font-size: 28px; /* Increased font size */
+            color: #fff;
+            /* White text for headings */
+            margin-bottom: 25px;
+            /* Increased margin */
+            font-size: 28px;
+            /* Increased font size */
         }
 
         p {
-            font-size: 20px; /* Increased font size */
-            color: #ddd; /* Light gray text for paragraphs */
-            margin-bottom: 30px; /* Increased margin */
+            font-size: 20px;
+            /* Increased font size */
+            color: #ddd;
+            /* Light gray text for paragraphs */
+            margin-bottom: 30px;
+            /* Increased margin */
         }
+
         .button-group {
-    margin-top: 30px; /* Increased margin */
-    display: flex; /* Use flexbox layout */
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center; /* Center-align buttons horizontally */
-}
+            margin-top: 30px;
+            /* Increased margin */
+            display: flex;
+            /* Use flexbox layout */
+            flex-direction: column;
+            /* Stack buttons vertically */
+            align-items: center;
+            /* Center-align buttons horizontally */
+        }
 
-.button-group a,
-.button-group button {
-    background-color: #0288d1; /* Bright blue */
-    color: #fff;
-    padding: 12px 20px; /* Adjust padding for consistent button size */
-    border-radius: 6px; /* Increased border-radius */
-    border: none;
-    text-decoration: none;
-    font-size: 18px; /* Increased font size */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 8px 0; /* Increased margin and removed horizontal margin */
-    display: block; /* Ensure buttons and links are block elements */
-    width: 100%; /* Make buttons full width of the container */
-    max-width: 300px; /* Adjust based on your design */
-    text-align: center; /* Center-align text */
-    box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
-}
+        .button-group a,
+        .button-group button {
+            background-color: #007bff;
+            /* Bright blue */
+            color: #fff;
+            padding: 12px 20px;
+            /* Adjust padding for consistent button size */
+            border-radius: 6px;
+            /* Increased border-radius */
+            border: none;
+            text-decoration: none;
+            font-size: 18px;
+            /* Increased font size */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 8px 0;
+            /* Increased margin and removed horizontal margin */
+            display: block;
+            /* Ensure buttons and links are block elements */
+            width: 100%;
+            /* Make buttons full width of the container */
+            max-width: 300px;
+            /* Adjust based on your design */
+            text-align: center;
+            /* Center-align text */
+            box-sizing: border-box;
+            /* Ensure padding and border are included in element's total width and height */
+        }
 
-/* Specific styling for the logout form to ensure it matches the other buttons */
-.button-group form {
-    width: 100%; /* Ensure form takes full width */
-    max-width: 300px; /* Ensure form width matches button width */
-    display: flex; /* Use flexbox layout */
-    justify-content: center; /* Center-align button horizontally */
-}
+        .button-group a:hover,
+        .button-group button:hover {
+            background-color: #0056b3;
+            /* Darker blue on hover */
+        }
 
-.button-group form button {
-    width: 100%; /* Ensure button takes full width of the form */
-    padding: 12px 20px; /* Match button padding */
-    border-radius: 6px; /* Match button border-radius */
-    box-sizing: border-box; /* Include padding and border in total width */
-}
+        /* Specific styling for the logout form to ensure it matches the other buttons */
+        .button-group form {
+            width: 100%;
+            /* Ensure form takes full width */
+            max-width: 300px;
+            /* Ensure form width matches button width */
+            display: flex;
+            /* Use flexbox layout */
+            justify-content: center;
+            /* Center-align button horizontally */
+        }
+
+        .button-group form button {
+            width: 100%;
+            /* Ensure button takes full width of the form */
+            padding: 12px 20px;
+            /* Match button padding */
+            border-radius: 6px;
+            /* Match button border-radius */
+            box-sizing: border-box;
+            /* Include padding and border in total width */
+        }
+
         form {
             display: inline-block;
         }
@@ -89,20 +131,31 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 70px; /* Increased width */
-            height: 70px; /* Increased height */
-            background-color: #0288d1; /* Match button color */
+            width: 80px;
+            /* Increased width */
+            height: 80px;
+            /* Increased height */
+            background-color: #007bff;
+            /* Match button color */
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 1000;
+            background-image: url("{% static 'icon.png' %}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        #chatbot-icon.toggled {
+            background-image: url("{% static 'cross.jpg' %}");
+            /* URL for the toggled icon */
         }
 
         #chatbot-icon img {
-            width: 35px; /* Increased size */
-            height: 35px; /* Increased size */
+            width: 100px;
+            height: 100px;
         }
 
         #chatbot-popup {
@@ -110,12 +163,13 @@
             position: fixed;
             bottom: 90px;
             right: 20px;
-            width: 400px; /* Increased width */
-            height: 580px; /* Increased height */
-            background-color: #333;
+            width: 400px;
+            height: 600px;
+            background-color: #2b2b2b;
+            /* Updated color */
             border: 1px solid #555;
-            border-radius: 12px; /* Increased border-radius */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Larger shadow */
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             overflow: hidden;
             display: flex;
@@ -137,49 +191,81 @@
         }
 
         #chatbot-popup header {
-            padding: 12px; /* Increased padding */
-            background-color: #0288d1; /* Match button color */
-            color: white;
-            border-top-left-radius: 12px; /* Increased border-radius */
-            border-top-right-radius: 12px; /* Increased border-radius */
+            padding: 12px;
+            background-color: #007bff;
+            /* Updated color */
+            color: #f4f4f4;
+            /* Updated text color */
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
             text-align: center;
-            font-size: 20px; /* Increased font size */
+            font-size: 20px;
         }
 
         #chatbot-popup #chatbox {
             flex: 1;
-            padding: 12px; /* Increased padding */
+            padding: 12px;
             overflow-y: auto;
             border-bottom: 1px solid #555;
-            background-color: #222;
+            background-color: #3c3c3c;
+            /* Updated color */
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
 
+        /* Badge for new messages */
+        #chatbot-alert {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff0000;
+            color: #fff;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 12px;
+            display: none;
+            text-align: center;
+            /* Center-align text inside the badge */
+            line-height: 1.2;
+        }
+
+        #chatbot-alert.show {
+            display: inline-block;
+        }
+
         .message {
-            padding: 12px; /* Increased padding */
-            margin-bottom: 12px; /* Increased margin */
-            border-radius: 10px; /* Increased border-radius */
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 10px;
             max-width: 80%;
             word-wrap: break-word;
-            color: #fff;
+            /* Ensures words wrap within the container */
+            white-space: pre-wrap;
+            /* Preserves whitespace and allows text to wrap */
+            color: #f4f4f4;
+            display: inline-block;
+            /* Ensure each message is treated as a block within the flex container */
         }
 
         .user-message {
-            background-color: #0288d1;
+            background-color: #007bff;
+            /* Updated color */
             align-self: flex-end;
+            text-align: right;
         }
 
         .chatbot-message {
-            background-color: #444;
+            background-color: #4a4a4a;
+            /* Updated color */
             align-self: flex-start;
             text-align: left;
         }
 
         #chatbot-popup footer {
-            padding: 12px; /* Increased padding */
-            background-color: #333;
+            padding: 12px;
+            background-color: #2b2b2b;
+            /* Updated color */
             border-top: 1px solid #555;
             display: flex;
             align-items: center;
@@ -187,24 +273,28 @@
 
         #chatbot-popup footer input[type="text"] {
             flex: 7;
-            padding: 10px; /* Increased padding */
-            border-radius: 6px; /* Increased border-radius */
+            padding: 10px;
+            border-radius: 6px;
             border: 1px solid #555;
-            background-color: #444;
-            color: #fff;
-            font-size: 16px; /* Increased font size */
+            background-color: #3c3c3c;
+            /* Updated color */
+            color: #f4f4f4;
+            /* Updated text color */
+            font-size: 16px;
         }
 
         #chatbot-popup footer button {
-            width: 70px; /* Increased width */
-            padding: 10px; /* Increased padding */
-            border-radius: 6px; /* Increased border-radius */
+            width: 70px;
+            padding: 10px;
+            border-radius: 6px;
             border: none;
-            background-color: #0288d1; /* Match button color */
-            color: white;
+            background-color: #007bff;
+            /* Updated color */
+            color: #f4f4f4;
+            /* Updated text color */
             cursor: pointer;
-            margin-left: 8px; /* Increased margin */
-            font-size: 16px; /* Increased font size */
+            margin-left: 8px;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -226,60 +316,55 @@
 
     <!-- Chatbot Icon -->
     <div id="chatbot-icon">
-        <img src="{% static 'chatbot-icon.png' %}" alt="Chatbot Icon">
+        <img src="{% static 'icon.png' %}" alt="Chatbot Icon">
+        <div id="chatbot-alert" class="hidden"></div> <!-- Badge for new messages -->
     </div>
 
     <!-- Chatbot Popup -->
     <div id="chatbot-popup">
-        <header>Edbot</header>
+        <header>Chat with EdBot!</header>
         <div id="chatbox">
-            <!-- Chat history will be displayed here -->
+            <!-- Messages will be appended here -->
         </div>
         <footer>
-            <form id="chat-form">
-                <input type="text" name="message" id="message-input" placeholder="Type your message">
-                <button type="submit">Send</button>
-            </form>
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="send-button">Send</button>
         </footer>
     </div>
 
-    <script>
-        document.getElementById('chatbot-icon').addEventListener('click', function () {
-            const popup = document.getElementById('chatbot-popup');
-            if (popup.classList.contains('show')) {
-                popup.classList.remove('show');
-                popup.classList.add('hide');
-            } else {
-                popup.classList.remove('hide');
-                popup.classList.add('show');
+    <script>document.addEventListener('DOMContentLoaded', function () {
+            // Check if the alert should be shown
+            if (!localStorage.getItem('chatbotAlertShown')) {
+                showChatbotAlert(); // Show the alert on the chatbot icon
+                localStorage.setItem('chatbotAlertShown', 'true'); // Mark alert as shown
             }
+
+            // Send a welcome message on page load
+            sendMessage('Hello!Can you help me?');
         });
 
-        document.getElementById('chat-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent form from submitting the default way
-
-            const formData = new FormData(this);
-
-            fetch('/chat/', { // Ensure this matches your URL pattern
+        function sendMessage(message) {
+            fetch('/chat/', {
                 method: 'POST',
                 headers: {
-                    'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: new URLSearchParams(formData) // Convert FormData to URLSearchParams
+                body: new URLSearchParams({ 'message': message })
             })
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
                         console.error('Error:', data.error);
-                        // Handle the error message (e.g., show an alert or display an error message)
                     } else {
-                        console.log('Response:', data.response);
-                        // Update the chat interface
-                        addMessage('user', formData.get('message'));
                         addMessage('chatbot', data.response);
+                        showChatbotAlert(); // Show the alert on the chatbot icon
                     }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
-        });
+        }
 
         function addMessage(sender, message) {
             const chatbox = document.getElementById('chatbox');
@@ -288,8 +373,42 @@
             messageElement.classList.add(sender === 'user' ? 'user-message' : 'chatbot-message');
             messageElement.textContent = message;
             chatbox.appendChild(messageElement);
-            chatbox.scrollTop = chatbox.scrollHeight;
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom of the chatbox
         }
+
+        function showChatbotAlert() {
+            const alertElement = document.getElementById('chatbot-alert');
+            alertElement.textContent = '1'; // Show "1" in the alert badge
+            alertElement.classList.add('show');
+        }
+
+        function hideChatbotAlert() {
+            const alertElement = document.getElementById('chatbot-alert');
+            alertElement.classList.remove('show');
+        }
+
+        document.getElementById('chatbot-icon').addEventListener('click', function () {
+            const popup = document.getElementById('chatbot-popup');
+            popup.classList.toggle('show');
+            hideChatbotAlert(); // Remove the alert when the chatbox is opened
+        });
+
+        document.getElementById('send-button').addEventListener('click', function () {
+            const input = document.getElementById('chat-input');
+            const message = input.value;
+            if (message.trim() !== '') {
+                addMessage('user', message);
+                sendMessage(message);
+                input.value = '';
+            }
+        });
+
+        document.getElementById('chat-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('send-button').click();
+            }
+        });
 
         function getCookie(name) {
             let cookieValue = null;
@@ -306,7 +425,6 @@
             return cookieValue;
         }
     </script>
-
 </body>
 
 </html>
